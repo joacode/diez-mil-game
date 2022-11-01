@@ -3,4 +3,4 @@ project(tp_integrador)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(tp_integrador main.cpp)
+add_executable(tp_integrador main.cpp menu.h)
