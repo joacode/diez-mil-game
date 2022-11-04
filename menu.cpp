@@ -54,7 +54,7 @@ int menu() {
             }
             continue;
 
-        case rlutil::KEY_ENTER:
+        case rlutil::KEY_SPACE:
             if (y == 0 || y == 1) {
                 rlutil::cls();
                 return op = 1;
