@@ -55,7 +55,10 @@ int menu() {
             continue;
 
         case rlutil::KEY_SPACE:
-            if (y == 0 || y == 1) {
+            if (y == 0) {
+                rlutil::cls();
+                return op = 0;
+            } else if (y == 1) {
                 rlutil::cls();
                 return op = 1;
             } else {
@@ -68,5 +71,4 @@ int menu() {
 
     std::cout << std::endl;
     return op;
-
 }
