@@ -28,7 +28,8 @@ int menu() {
 
         showItem("JUEGO  SOLITARIO", 30, 10, y == 0);
         showItem(" JUEGO DE A DOS ", 30, 11, y == 1);
-        showItem("     SALIR      ", 30, 12, y == 2);
+        showItem("MAXIMO  PUNTAJE ", 30, 13, y == 2);
+        showItem("     SALIR      ", 30, 12, y == 3);
 
         rlutil::locate(28, 10 + y);
         std::cout << (char)126 << std::endl;
@@ -61,9 +62,12 @@ int menu() {
             } else if (y == 1) {
                 rlutil::cls();
                 return op = 1;
-            } else {
+            } else if (y == 2) {
                 rlutil::cls();
                 return op = 2;
+            } else {
+                rlutil::cls();
+                return op = 3;
             }
         }
 
