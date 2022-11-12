@@ -4,8 +4,29 @@
 using namespace std;
 using namespace rlutil;
 
-void mensajeTurno() {
+char pantallaTurno(int nRonda, string nJugadores[2], string tocaJugar, int puntajesTotales[2]) {
+    char k;
+    rlutil::cls();
+    cout << "RONDA N° " << nRonda << endl;
 
+    if (nJugadores[1] != "null") {
+        cout << "PROXIMO TURNO: " << tocaJugar << endl << endl;
+    }
+
+    if (nJugadores[1] != "null") {
+        cout << "PUNTAJE " << nJugadores[0]  << ": " << puntajesTotales[0] << " PUNTOS" << endl;
+        cout << "PUNTAJE " << nJugadores[1]  << ": " << puntajesTotales[1] << " PUNTOS" << endl << endl;
+    } else {
+        cout << "PUNTAJE " << nJugadores[0]  << ": " << puntajesTotales[0] << " PUNTOS" << endl << endl;
+    }
+
+    do {
+        cout << "PRESIONA 's' PARA CONTINUAR... (s): ";
+        cin >> k;
+    } while (k != 's');
+
+    rlutil::cls();
+    return k;
 }
 
 void interfaz(string pName, int nRonda, int puntajeTotal, int puntajeRonda, int nTiro, string msjPuntaje, int dados[6]) {
