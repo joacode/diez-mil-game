@@ -210,6 +210,11 @@ int juego(int indexJugadores, MaxPuntaje& maxPuntaje, NombreMaxPuntaje& nombreMa
                         }
                     }
 
+                    if (puntajeRonda < 50) {
+                        puntajeRonda = 0;
+                        msjPuntaje = "No obtuviste ningun juego!";
+                    }
+
                     cout << endl;
                 }
 
