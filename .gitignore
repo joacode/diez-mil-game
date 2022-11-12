@@ -12,3 +12,6 @@ _deps
 Scratches
 .DS_Store
 .idea
+.exe
+.ninja_deps
+.ninja_log
