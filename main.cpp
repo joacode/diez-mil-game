@@ -7,15 +7,31 @@
 using namespace std;
 using namespace rlutil;
 
-//pantalla turno j1,
+class MaxPuntaje {
+    private: int maxPuntaje;
 
-//juego j1,
-//''tira posibles 3 dados, elige el tiro, termina ronda,
-//termina turno j1,
-//pantalla turno j2,
-//juego j2,
-//termina turno j2,
-//repite desde pantalla turno j1...,
+    public:
+        void setMaxPuntaje(int m) {
+        maxPuntaje = m;
+        }
+
+        int getMaxPuntaje() {
+            return maxPuntaje;
+        }
+};
+
+class NombreMaxPuntaje {
+    private: string nombreMaxPuntaje;
+
+    public:
+        void setNombreMaxPuntaje(string nombre) {
+            nombreMaxPuntaje = nombre;
+        }
+
+        string getNombreMaxPuntaje() {
+            return nombreMaxPuntaje;
+        }
+};
 
 string pedirNombre(int indexJugadores, int current) {
     string pName;
@@ -34,7 +50,7 @@ string pedirNombre(int indexJugadores, int current) {
     return pName;
 }
 
-int juego(int indexJugadores) {
+int juego(int indexJugadores, MaxPuntaje& maxPuntaje, NombreMaxPuntaje& nombreMaxPuntaje) {
     char k;
     string msjPuntaje, nJugadores[2] = {"", "null"}, jGanador;
     int dados[6] = {0, 0, 0, 0, 0, 0}, puntaje[6] = {0, 0, 0, 0, 0, 0}, puntajesTotales[2] = {0, 0};
@@ -235,14 +251,14 @@ int juego(int indexJugadores) {
 
             if (nRonda < 10) {
                 if (step == 0) {
-                    k = pantallaTurno(nRonda, nJugadores, nJugadores[1], puntajesTotales);
+                    k = pantallaTurno(nRonda + 1, nJugadores, nJugadores[1], puntajesTotales);
                 } else {
                     k = pantallaTurno(nRonda + 1, nJugadores, nJugadores[0], puntajesTotales);
                 }
             }
         }
         nRonda++;
-        if (nRonda >= 10) {
+        if (nRonda > 10) {
             if (puntajesTotales[0] > puntajesTotales[1]) {
                 jGanador = nJugadores[0];
                 puntajeGanador = puntajesTotales[0];
@@ -254,6 +270,12 @@ int juego(int indexJugadores) {
             cout << "FIN DE LA PARTIDA!" << endl;
             cout << "JUEGO TERMINADO EN " << nRonda - 1 << " TURNOS" << endl;
             cout << "PUNTAJE GANADOR: " << jGanador << ", " << puntajeGanador << " PUNTOS";
+
+            if (puntajeGanador > maxPuntaje.getMaxPuntaje()) {
+                maxPuntaje.setMaxPuntaje(puntajeGanador);
+                nombreMaxPuntaje.setNombreMaxPuntaje(jGanador);
+            }
+
             break;
         }
     }
@@ -262,16 +284,21 @@ int juego(int indexJugadores) {
 }
 
 int main() {
+    MaxPuntaje maxPuntaje{};
+    NombreMaxPuntaje nombreMaxPuntaje{};
     char j;
     int indexJugadores;
 
-    while (1) {
+    maxPuntaje.setMaxPuntaje(0);
+    nombreMaxPuntaje.setNombreMaxPuntaje("");
+
+    while (true) {
         int m = menu();
 
         if (m == 0) {
             cout << "MODO DE JUEGO 1 JUGADOR" << endl;
-            indexJugadores = 1;
-            juego(indexJugadores);
+            indexJugadores = 0;
+            juego(indexJugadores, maxPuntaje, nombreMaxPuntaje);
 
             do {
                 cout << "JUGAR OTRA VEZ? (s/n): " << endl;
@@ -282,12 +309,27 @@ int main() {
         } else if (m == 1) {
             cout << "MODO DE JUEGO 2 JUGADORES" << endl;
             indexJugadores = 1;
-            juego(indexJugadores);
+            juego(indexJugadores, maxPuntaje, nombreMaxPuntaje);
             do {
                 cout << "JUGAR OTRA VEZ? (s/n): " << endl;
                 cin >> j;
             } while (j != 's' && j != 'n');
             if (j == 'n') break;
+
+        } else if (m == 2) {
+            int maxPuntos = maxPuntaje.getMaxPuntaje();
+            string nombreMaxPuntos = nombreMaxPuntaje.getNombreMaxPuntaje();
+
+            if (maxPuntos == 0 && nombreMaxPuntos.empty()) {
+                cout << "AUN NO HAY JUEGOS REGISTRADOS" << endl;
+            }
+            cout << "PUNTAJE MAXIMO: " << nombreMaxPuntos << ", " << maxPuntos << " PUNTOS" << endl;
+
+            do {
+                cout << "PRESIONA 's' PARA CONTINUAR... (s): ";
+                cin >> j;
+            } while (j != 's');
+            if (j == 's') continue;
         } else {
             break;
         }
